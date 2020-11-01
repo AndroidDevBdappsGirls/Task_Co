@@ -1,52 +1,58 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mydynamic/Homepgg.dart';
-import 'package:mydynamic/loginpage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+import 'LoginPage.dart';
 
-
-
-void main() async  {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+      fontFamily: 'regular'
       ),
-      home: Edword(),
+      home: MyHomePage(),
     );
   }
 }
 
-class Edword extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    Timer(Duration(seconds: 3), openOnboard);
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User>(
-
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder:(context, snapshot) {
-          if(snapshot.hasData && snapshot.data != null){
-            return HomePgg();
-          }
-
-          return LoginPage();
-        }
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: Image.asset(
+            'assets/images/logo.png',
+            height: 200,
+            width: 200,
+          ),
+        ),
+      ),
     );
-
-
-
-
   }
+
+  void openOnboard(){
+
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage())); //navigate to this class
+
+
 }
-
-
+}
